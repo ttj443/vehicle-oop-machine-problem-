@@ -1,0 +1,66 @@
+<?php
+class Vehicle {
+    public $name;
+    public $speed;
+    public $mileage;
+
+    public function __construct($name, $speed, $mileage) {
+        $this->name = $name;
+        $this->speed = $speed;
+        $this->mileage = $mileage;
+    }
+
+    public function vehicleInfo() {
+        return "Vehicle: $this->name, Speed: $this->speed, Mileage: $this->mileage";
+    }
+
+    public function seating_capacity() {
+        return "This vehicle has a default seating capacity.";
+    }
+
+    public function fare() {
+        return $this->seating_capacity() * 100;
+    }
+}
+
+class EmptyVehicle {
+   
+}
+
+class Bus extends Vehicle {
+    public $capacity;
+
+    public function __construct($name, $speed, $mileage, $capacity = 50) {
+        parent::__construct($name, $speed, $mileage);
+        $this->capacity = $capacity;
+    }
+
+    public function seating_capacity() {
+        return $this->capacity;
+    }
+
+    public function fare() {
+        $totalFare = parent::fare();
+        return $totalFare + ($totalFare * 0.10);
+    }
+}
+
+class Car extends Vehicle {
+    public static $fuelType = "Petrol"; 
+    public static function getFuelType() {
+        return self::$fuelType;
+    }
+}
+
+$vehicle = new Vehicle("Car", 120, 18);
+echo $vehicle->vehicleInfo() . "\n"; 
+
+$bus = new Bus("Bus", 80, 12);
+echo $bus->vehicleInfo() . "\n";  
+echo "Bus Seating Capacity: " . $bus->seating_capacity() . "\n"; 
+echo "Bus Fare: " . $bus->fare() . "\n"; 
+
+$car = new Car("Sedan", 150, 15);
+echo "Car Fuel Type: " . Car::getFuelType() . "\n"; 
+?>
+
